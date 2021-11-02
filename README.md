@@ -1,1 +1,1 @@
-# go-player-site
+# Go Player! Site
