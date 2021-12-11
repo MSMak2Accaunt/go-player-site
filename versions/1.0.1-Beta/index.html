@@ -20,7 +20,14 @@
 	<div class="slowmo">
 		<div class="slowmo__bar"></div>
 	</div>
+	<div class="fastmo">
+		<div class="fastmo__bar"></div>
+	</div>
 </div>
+
+
+
+
 
 <!-- Menu System -->
 <div class="menus">
@@ -28,9 +35,11 @@
 		<h1>JACONKIL</h1>
 		<button type="button" class="play-normal-btn">НАЧАТЬ</button>
 		<button type="button" class="play-casual-btn">КАЗУАЛЬНЫЙ МОД</button>
+		<a style="text-decoration: none;" id="open_pop_up">
+			<button type="button" class="exit-casual-btn">ОБ ИГРЕ</button></a>
 		<a style="text-decoration: none;" href="../../">
 		<button type="button" class="exit-casual-btn">ВЫЙТИ ИЗ ИГРЫ</button></a>
-		<div class="credits">От MS (Mak) | Версия игры: 1.0</a></div>
+		<div class="credits">От MS (Mak) | Версия игры: 1.0.1 BETA</div>
 	</div>
 	<div class="menu menu--pause">
 		<h1>Игра на паузе</h1>
@@ -47,7 +56,19 @@
 	</div>
 </div>
 
-
+<!-- Popup -->
+<div class="pop_up" id="pop_up">
+    <div class="pop_up_container">
+        <div class="pop_up_body" id="pop_up_body">
+            <p>Об игре:</p>
+            <form action="">
+                  <h3>Главная цель игры:</h3>
+				  <h5>Чем больше кубиков прибьёте, тот и выйграет.</h5>
+            </form>
+			<div class="pop_up_close" id="pop_up_close">&#10006</div>
+        </div>
+    </div>
+</div>
 
 <style>
     body {
@@ -62,6 +83,7 @@
 	letter-spacing: 0.06em;
 	color: rgba(255, 255, 255, 0.75);
 }
+
 
 #c {
 	display: block;
@@ -155,6 +177,40 @@
 	transform-origin: 0 0;
 }
 
+.fastmo {
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	pointer-events: none;
+	opacity: 0;
+	transition: opacity 0.4s;
+	will-change: opacity;
+}
+
+.fastmo::before {
+	content: 'Ускоренное движение';
+	display: block;
+	font-size: calc(8px + 1vw + 0.5vh);
+	margin-left: 0.5em;
+	margin-bottom: 8px;
+}
+
+.fastmo::after {
+	content: '';
+	display: block;
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	height: 1.5vh;
+	background-color: rgba(0, 0, 0, 0.25);
+	z-index: -1;
+}
+
+.fastmo__bar {
+	height: 1.5vh;
+	background-color: rgba(255, 255, 255, 0.75);
+	transform-origin: 0 0;
+}
 
 
 /*/////////////////////
@@ -304,6 +360,96 @@ button:active::before {
 
 a {
 	color: white;
+}
+
+/* PopUP */
+
+.pop_up {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    background-color: transparent;
+    z-index: 2;
+    transform: translateY(-44.5%) scale(0);
+    transition: .4s ease-in-out;
+}
+
+.pop_up.active {
+   transform: translateY(0%) scale(100%);
+   background-color: rgba(0, 0, 0, .8);
+}
+
+.pop_up_container{
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+
+.pop_up_body {
+    margin: auto;
+    width: 500px;
+    background-color: #fff;
+    border-radius: 10px;
+    text-align: center;
+    padding: 100px 15px 110px 15px;
+    position: relative;
+}
+
+.pop_up_body p {
+    font-size: 28px;
+	font-family: "Montserrat", sans-serif;
+    font-weight: 600;
+    color: #22262D;
+    margin-bottom: 40px;
+}
+
+.pop_up_body input {
+    display: block;
+    margin: 25px auto 0px auto;
+    width: 330px;
+    padding: 17px 20px;
+    background-color: #E5E5E5;
+    border-radius: 10px;
+    border: none;
+	font-family: "Montserrat", sans-serif;
+    font-weight: 500;
+    font-size: 18px;
+    color: #89909F;
+}
+
+.pop_up_body input:focus {
+    outline: none;
+}
+
+.pop_up_body h1, h2, h3, h4, h5, h6, p {
+	color: black;
+	font-family: "Montserrat", sans-serif;
+}
+
+.pop_up_body button {
+    cursor: pointer;
+    display: block;
+    width: 330px;
+    margin: 60px auto 0px auto;
+    padding: 20px 0px;
+	font-family: "Montserrat", sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    border: none;
+    color: black;
+    border-radius: 10px;
+    background-color: rgb(6, 73, 117);
+}
+
+.pop_up_close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 21px;
+    cursor: pointer;
+	color:#000;
 }
 
 /* Only enable hover state on large screens */
@@ -1569,7 +1715,7 @@ function renderScoreHud() {
 		scoreNode.style.display = 'block';
 		cubeCountNode.style.opacity = 0.65 ;
 	}
-	cubeCountNode.innerText = `КУБОВ РАЗБИТО: ${state.game.cubeCount}`;
+	cubeCountNode.innerText = `КУБОВ УНИЧТОЖЕНО: ${state.game.cubeCount}`;
 }
 
 renderScoreHud();
@@ -2507,6 +2653,22 @@ if ('PointerEvent' in window) {
 
 setupCanvases();
 
+// popup.js
+// ============================================================================
+// ============================================================================
+
+const openPopUp = document.getElementById('open_pop_up');
+const closePopUp = document.getElementById('pop_up_close');
+const popUp = document.getElementById('pop_up');
+
+openPopUp.addEventListener('click', function(e){
+    e.preventDefault();
+    popUp.classList.add('active');
+})
+
+closePopUp.addEventListener('click', () => {
+    popUp.classList.remove('active');
+})
 </script>
 </body>
 </html>

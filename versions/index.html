@@ -63,7 +63,6 @@ header {
 
 .cta {
   padding: 9px 25px;
-  background-color: rgba(0, 136, 169, 1);
   border: none;
   border-radius: 50px;
   cursor: pointer;
@@ -71,8 +70,26 @@ header {
 }
 
 .cta:hover {
+  color: rgba(90, 222, 255, 0.8);
+}
+.cta-button {
+  padding: 9px 25px;
+  background-color: rgba(0, 136, 169, 1);
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  color: #edf0f1;
+  text-decoration: none;
+  transition: background-color 0.3s ease 0s;
+}
+
+.cta-button:hover {
   background-color: rgba(0, 136, 169, 0.8);
 }
+
+
 
 /* Mobile Nav */
 
@@ -151,7 +168,7 @@ h1 {
     </head>
     <body>
         <header>
-            <a class="logo" href="../"><img height="70px" src="../images/logo.png" alt="logo"></a>
+            <a class="logo" href="../"><img height="70px" src="/images/logo.png" alt="logo"></a>
             <nav>
                 <ul class="nav__links">
                     <li><a href="../" class="active">Главная</a></li>
@@ -169,8 +186,8 @@ h1 {
         </div>
 <br>
 <center><h1>Выберите версию игры:</h1><br>
-        <a class="cta" href="1.0">1.0</a><br><br><br>
-        <a class="cta" href="1.1-Beta">1.1 Beta</a></center>
+        <a class="cta-button" href="1.0">1.0</a><br><br><br>
+        <a class="cta-button" href="1.0.1-Beta">1.0.1 Beta</a></center>
 
     <!-- JS Scripts -->
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
